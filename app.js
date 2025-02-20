@@ -7,7 +7,7 @@ var logger = require('morgan');
 const {connectToMongoDb} = require('./config/db');
 
 
-require('dotenv').confid();
+require('dotenv').config();
 
 const http = require('http');
 

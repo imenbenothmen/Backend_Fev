@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const osContoller = require('../controllers/osContoller');
+const osController = require('../controllers/osController');
 /* GET home page. */
-router.get('/getOsInformation', osContoller.getOsInformation );
-
-
+router.get('/getOsInformation', osController.getOSInformation );
 module.exports = router;
