@@ -3,10 +3,10 @@ const bcrypt = require("bcrypt");
 const userSchema = new mongoose.Schema(
   {
     username: {
-        type: String,
-        required: true,
-        unique: true,
-      },
+      type: String,
+      required: true,
+      unique: true,
+    },
     email: {
       type: String,
       required: true,
@@ -28,8 +28,10 @@ const userSchema = new mongoose.Schema(
       enum: ["admin", "client", "infi"],
     },
     user_image: { type: String, require: false, default: "client.png" },
-    age: {type : Number },
-    count: {type : Number, default:'0'}
+    age: { type: Number },
+    count: { type: Number, default: '0' },
+    bijoux: [{ type: mongoose.Schema.Types.ObjectId, ref: 'bijou' }], // one to many
+    
   },
   { timestamps: true }
 );

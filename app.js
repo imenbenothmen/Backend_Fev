@@ -14,6 +14,9 @@ const http = require('http');
 var indexRouter = require('./routes/indexRouter');
 var usersRouter=require('./routes/usersRouter');
 var osRouter=require('./routes/osRouter');
+var bijouRouter =require('./routes/bijouRouter');
+
+const Bijou = require('./models/bijouSchema');
 
 var app = express();
 
@@ -26,6 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use("/", indexRouter);
 app.use('/users', usersRouter);
 app.use('/os', osRouter);
+app.use('/bijoux', bijouRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
