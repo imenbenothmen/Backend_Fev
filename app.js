@@ -14,9 +14,18 @@ const http = require('http');
 var indexRouter = require('./routes/indexRouter');
 var usersRouter=require('./routes/usersRouter');
 var osRouter=require('./routes/osRouter');
-var bijouRouter =require('./routes/bijouRouter');
+var produitRouter = require('./routes/produitRouter');
+var GeminiRouter = require("./routes/GeminiRouter");
+var categorieRouter = require('./routes/categorieRouter');
+var commandeRouter = require("./routes/commandeRouter");
+var panierRouter = require("./routes/panierRouter");
+var avisRouter = require('./routes/avisRouter');
+var livraisonRouter= require("./routes/livraisonRouter");
+var favorisRouter= require("./routes/favorisRouter");
+var reclamationRouter= require("./routes/reclamationRouter");
 
-const Bijou = require('./models/bijouSchema');
+
+
 
 var app = express();
 
@@ -29,7 +38,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use("/", indexRouter);
 app.use('/users', usersRouter);
 app.use('/os', osRouter);
-app.use('/bijoux', bijouRouter);
+app.use('/produits', produitRouter);
+app.use("/Gemini", GeminiRouter);
+app.use('/categories', categorieRouter);
+app.use('/commande', commandeRouter);
+app.use('/panier', panierRouter);
+app.use('/avis', avisRouter);
+app.use('/livraison', livraisonRouter);
+app.use('/favoris', favorisRouter);
+app.use('/reclamation', reclamationRouter);
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

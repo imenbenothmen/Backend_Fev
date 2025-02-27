@@ -1,5 +1,6 @@
 const userModel = require('../models/userSchema');
 
+
 module.exports.addUserClient = async (req,res) => {
     try {
         const {username , email , password , age} = req.body;

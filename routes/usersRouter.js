@@ -13,8 +13,6 @@ router.get('/getAllClient',userController.getAllClient);
 router.get('/getAllAdmin',userController.getAllAdmin); 
 
 
-
-
 router.post('/addUserClient',userController.addUserClient);
 router.post('/addUserAdmin',userController.addUserAdmin); 
 router.post('/addUserClientWithImg',upload.single("image_user"),userController.addUserClientWithImg); 

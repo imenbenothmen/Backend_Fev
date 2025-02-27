@@ -30,8 +30,11 @@ const userSchema = new mongoose.Schema(
     user_image: { type: String, require: false, default: "client.png" },
     age: { type: Number },
     count: { type: Number, default: '0' },
-    bijoux: [{ type: mongoose.Schema.Types.ObjectId, ref: 'bijou' }], // one to many
+   
     
+    
+    // Un utilisateur peut passer plusieurs commandes
+    commandes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Commande' }] 
   },
   { timestamps: true }
 );
