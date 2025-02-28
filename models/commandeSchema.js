@@ -37,7 +37,14 @@ const commandeSchema = new mongoose.Schema({
   dateModification: {
     type: Date,
   },
-});
+    // Un utilisateur peut passer plusieurs commandes, mais chaque commande appartient à un seul utilisateur.
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, // Relation plusieurs-à-un
+    //Une commande peut avoir une ou plusieurs livraisons, et chaque livraison est associée à une commande.
+    livraisons: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Livraison' }] // Relation un-à-plusieurs
+},
+
+{ timestamps: true }
+);
 
 const Commande = mongoose.model('Commande', commandeSchema);
 module.exports = Commande;

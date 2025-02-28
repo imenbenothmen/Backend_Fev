@@ -17,8 +17,12 @@ router.post('/addUserClient',userController.addUserClient);
 router.post('/addUserAdmin',userController.addUserAdmin); 
 router.post('/addUserClientWithImg',upload.single("image_user"),userController.addUserClientWithImg); 
 
+
+
 router.put('/updateuserById/:id',userController.updateuserById); 
 
-router.delete('/deleteUserById',userController.deleteUserById);
+router.delete('/deleteUserById/:id',userController.deleteUserById);
+
+
 
 module.exports = router;

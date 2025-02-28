@@ -31,10 +31,19 @@ const userSchema = new mongoose.Schema(
     age: { type: Number },
     count: { type: Number, default: '0' },
    
-    
-    
-    // Un utilisateur peut passer plusieurs commandes
-    commandes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Commande' }] 
+    //Un utilisateur peut passer plusieurs commandes, mais chaque commande appartient à un seul utilisateur.
+    commandes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Commande' }], // Relation un-à-plusieurs
+    //Un utilisateur a un seul panier, et chaque panier appartient à un seul utilisateur.
+    panier: { type: mongoose.Schema.Types.ObjectId, ref: 'Panier' } ,// Relation un-à-un
+    //Un utilisateur peut avoir plusieurs produits favoris, et chaque produit peut être favori de plusieurs utilisateurs.
+    favoris: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Produit' }], // Relation plusieurs-à-plusieurs
+    //Un utilisateur peut soumettre plusieurs réclamations, et chaque réclamation appartient à un seul utilisateur.
+   reclamations: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Reclamation' }] // Relation un-à-plusieurs
+
+
+
+
+
   },
   { timestamps: true }
 );

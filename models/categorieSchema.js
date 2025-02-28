@@ -7,9 +7,10 @@ const categorieSchema = new mongoose.Schema({
   parent: { type: mongoose.Schema.Types.ObjectId, ref: 'Categorie', default: null },// Sous-catégories
 
 
+//Un produit appartient à une seule catégorie, mais une catégorie peut contenir plusieurs produits.
+produits: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Produit' }] // Relation un-à-plusieurs
 
-// Categorie → Bijou : One-to-Many (une catégorie peut avoir plusieurs bijoux).
-bijoux: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Bijou' }] //one to many
+
 },
 { timestamps: true });
 
