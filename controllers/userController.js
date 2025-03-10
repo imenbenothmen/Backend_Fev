@@ -1,4 +1,8 @@
 const userModel = require('../models/userSchema');
+const CommandeModel = require('../models/commandeSchema');
+const PanierModel = require('../models/panierSchema');
+const ProduitModel = require('../models/produitSchema');
+const ReclamationModel = require('../models/reclamationSchema');
 
 module.exports.addUserClient = async (req,res) => {
     try {

@@ -14,6 +14,7 @@ const produitSchema = new mongoose.Schema({
   categorie: { type: mongoose.Schema.Types.ObjectId, ref: 'Categorie' } ,// Relation plusieurs-à-un
 
 
+
   //Un produit peut avoir plusieurs avis, et chaque avis est associé à un seul produit.
   Avis: [{ type: mongoose.Schema.Types.ObjectId, ref: 'avis' }] ,// Relation un-à-plusieurs
 

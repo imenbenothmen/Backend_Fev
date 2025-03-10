@@ -1,5 +1,5 @@
-const produitModel = require('../models/ProduitSchema');  
-
+const produitModel = require('../models/produitSchema');  
+const categorieModel = require('../models/categorieSchema');
 // Ajouter un produit
 exports.ajouterProduit = async (req, res) => {
     try {

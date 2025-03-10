@@ -1,4 +1,7 @@
 const reclamationModel = require('../models/reclamationSchema');
+const commandeModel = require('../models/commandeSchema');
+const produitModel = require('../models/produitSchema');
+const userModel = require('../models/userSchema');
 
 // Soumettre une réclamation
 exports.soumettreReclamation = async (req, res) => {

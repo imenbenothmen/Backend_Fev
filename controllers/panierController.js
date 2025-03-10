@@ -1,6 +1,6 @@
 const panierModel = require('../models/panierSchema');
 const Produit = require('../models/ProduitSchema'); 
-
+const userModel = require('../models/userSchema');
 // Créer un nouveau panier
 exports.createPanier = async (req, res) => {
   try {

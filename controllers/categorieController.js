@@ -1,5 +1,5 @@
-const categorieModel = require('../models/categorieSchema');  // Correct import
-
+const categorieModel = require('../models/categorieSchema');  
+const produitModel = require('../models/produitSchema');  
 // Ajouter une nouvelle catégorie
 exports.ajouterCategorie = async (req, res) => {
   try {
