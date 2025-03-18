@@ -30,6 +30,8 @@ const userSchema = new mongoose.Schema(
     user_image: { type: String, require: false, default: "client.png" },
     age: { type: Number },
     count: { type: Number, default: '0' },
+
+    numeroCarteFidelite: { type: String, unique: true, sparse: true },
    
     //Un utilisateur peut passer plusieurs commandes, mais chaque commande appartient à un seul utilisateur.
     commandes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Commande' }], // Relation un-à-plusieurs

@@ -7,7 +7,8 @@ const reclamationSchema = new mongoose.Schema({
   description: { type: String, required: true },
   statut: { type: String, enum: ['En cours', 'Résolue', 'Archivée'], default: 'En cours' },
 //Un utilisateur peut soumettre plusieurs réclamations, et chaque réclamation appartient à un seul utilisateur.
-user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, // Relation plusieurs-à-un
+ //user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, 
+ // Relation plusieurs-à-un 
 
 //Une réclamation peut être liée à une commande spécifique, ce qui peut être utile si la réclamation est liée à un problème avec une commande.
   commande: { type: mongoose.Schema.Types.ObjectId, ref: 'Commande' } // Relation plusieurs-à-un
