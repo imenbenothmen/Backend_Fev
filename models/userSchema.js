@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const userSchema = new mongoose.Schema(
   {
-    username: {
+    
+      username: {
       type: String,
       required: true,
       unique: true,
@@ -27,12 +28,22 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: ["admin", "client", "infi"],
     },
-    user_image: { type: String, require: false, default: "client.png" },
-    age: { type: Number },
-    count: { type: Number, default: '0' },
+    delivery_address: { 
+      type: String, 
+      required: false, 
+      default: "" 
+    },
 
     numeroCarteFidelite: { type: String, unique: true, sparse: true },
    
+
+    user_image: { type: String, require: false, default: "client.png" },
+    
+    
+
+    etat: Boolean,
+    ban: Boolean,
+
     //Un utilisateur peut passer plusieurs commandes, mais chaque commande appartient à un seul utilisateur.
     commandes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Commande' }], // Relation un-à-plusieurs
     //Un utilisateur a un seul panier, et chaque panier appartient à un seul utilisateur.
