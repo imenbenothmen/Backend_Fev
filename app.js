@@ -4,11 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const session = require("express-session"); //session
-
 const {connectToMongoDb} = require('./config/db');
-
-
-require('dotenv').config();
+const cors = require("cors");
+require("dotenv").config();
 
 const http = require('http');
 
@@ -44,6 +42,11 @@ app.use(session({   //cobfig session
     secure: {secure: false},
     maxAge: 24*60*60,
   },
+}))
+
+app.use(cors({
+  origin:"http://localhost:3000",
+  methods:"GET,POST,PUT,Delete",
 }))
 
 app.use("/", indexRouter);
