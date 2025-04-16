@@ -8,6 +8,7 @@ const {connectToMongoDb} = require('./config/db');
 const cors = require("cors");
 require("dotenv").config();
 
+const logMiddleware = require('./middlewares/logsMiddlewares.js'); //log
 const http = require('http');
 
 var indexRouter = require('./routes/indexRouter');
@@ -33,6 +34,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(logMiddleware)  //log
+
 
 app.use(session({   //cobfig session
   secret: "net secret pfe",
