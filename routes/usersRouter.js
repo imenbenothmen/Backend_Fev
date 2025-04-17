@@ -21,7 +21,7 @@ router.post('/login',userController.login);
 router.post('/logout',userController.logout); 
 
 
-router.put('/updateuserById/:id',userController.updateuserById); 
+router.put('/updateUserById/:id',userController.updateUserById); 
 
 router.delete('/deleteUserById/:id',userController.deleteUserById);
 

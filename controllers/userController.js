@@ -94,7 +94,7 @@ module.exports.addUserClientWithImg = async (req,res) => {
         res.status(500).json({message: error.message});
     }
 }
-module.exports.updateuserById = async (req, res) => {
+module.exports.updateUserById = async (req, res) => {
     try {
         const {id} = req.params
         const {email , username} = req.body;
