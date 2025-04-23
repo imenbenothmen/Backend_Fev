@@ -24,6 +24,10 @@ const userSchema = new mongoose.Schema(
         "Le mot de passe doit contenir au moins 8 caractères, une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial.",
       ],
     },
+    phone: {
+      type: String,
+      required: false,
+    },
     role: {
       type: String,
       enum: ["admin", "client", "infi"],
