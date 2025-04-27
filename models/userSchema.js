@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["admin", "client", "infi"],
+      enum: ["admin", "client", "livreur"],
     },
     delivery_address: { 
       type: String, 
@@ -38,10 +38,12 @@ const userSchema = new mongoose.Schema(
       default: "" 
     },
 
-    numeroCarteFidelite: { type: String, unique: true, sparse: true },
+  
+
+    //numeroCarteFidelite: { type: String, unique: true, sparse: true },
    
 
-    user_image: { type: String, require: false, default: "client.png" },
+    user_image: { type: String, require: false },
     
     
 

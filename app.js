@@ -52,7 +52,7 @@ app.use(cors({
   methods:"GET,POST,PUT,Delete",
 }))
 
-app.use("/", indexRouter);
+app.use("", indexRouter);
 app.use('/users', usersRouter);
 app.use('/os', osRouter);
 app.use('/produits', produitRouter);

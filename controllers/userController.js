@@ -12,36 +12,102 @@ const createToken = (id) => {
     return jwt.sign({id},'net secret pfe', {expiresIn: maxTime })
 }
 
-module.exports.addUserClient = async (req,res) => {
+module.exports.addUserClient = async (req, res) => {
     try {
-        const {username , email , password , age} = req.body;
-        const roleClient = 'client'
-        // if (!checkIfUserExists) {
-        //     throw new Error("User not found");
-        //   }
+        // Affichage du contenu du body de la requête
+        console.log(req.body); // Cela affichera les données envoyées dans le corps de la requête
+
+        const { username, email, password, phone, role, delivery_address , user_image } = req.body;
+        const roleClient = 'client';
+        
+        // Vérification des données (si nécessaire)
+        if (!username || !email || !password) {
+            throw new Error("Les champs username, email et password sont obligatoires.");
+        }
+
+        // Création de l'utilisateur
         const user = await userModel.create({
-            username,email ,password,role :roleClient, age
-        })
-        res.status(200).json({user});
+            username, email, password, role: roleClient, phone, delivery_address,  user_image
+        });
+
+        res.status(200).json({ user });
     } catch (error) {
-        res.status(500).json({message: error.message});
+        console.error('Erreur lors de l\'ajout de l\'utilisateur:', error.message);  // Affichage de l'erreur dans la console
+        res.status(500).json({ message: error.message });
     }
-}
-module.exports.addUserAdmin= async (req,res) => {
+};
+ 
+
+module.exports.addUserLivreur = async (req, res) => {
     try {
-        const {username , email , password } = req.body;
-        const roleAdmin = 'admin'
+        // Affichage du contenu du body de la requête
+        console.log(req.body); // Cela affichera les données envoyées dans le corps de la requête
+
+        const { username, email, password, phone, delivery_address, numeroCarteFidelite, user_image } = req.body;
+
+        // Vérification des données (si nécessaire)
+        if (!username || !email || !password) {
+            throw new Error("Les champs username, email et password sont obligatoires.");
+        }
+
+        // Création de l'utilisateur
         const user = await userModel.create({
-            username,email ,password,role :roleAdmin
-        })
-        res.status(200).json({user});
+            username,
+            email,
+            password,
+            phone,
+            role: "livreur",  // Rôle spécifique pour un livreur
+            delivery_address,
+            numeroCarteFidelite,
+            user_image,
+        });
+
+        res.status(200).json({ message: "Livreur créé avec succès", user });
     } catch (error) {
-        res.status(500).json({message: error.message});
+        console.error('Erreur lors de l\'ajout de l\'utilisateur livreur:', error.message);  // Affichage de l'erreur dans la console
+        res.status(500).json({ message: error.message });
     }
-}
+};
+
+
+
+
+module.exports.addUserAdmin = async (req, res) => {
+    try {
+        // Affichage du contenu du body de la requête
+        console.log(req.body); // Cela affichera les données envoyées dans le corps de la requête
+
+        const { username, email, password } = req.body;
+        const roleAdmin = 'admin';
+
+        // Vérification des données (si nécessaire)
+        if (!username || !email || !password) {
+            throw new Error("Les champs username, email et password sont obligatoires.");
+        }
+
+        // Création de l'utilisateur
+        const user = await userModel.create({
+            username,
+            email,
+            password,
+            role: roleAdmin
+        });
+
+        // Affichage de l'utilisateur créé
+        console.log(user);  // Cela affichera l'utilisateur créé
+
+        res.status(200).json({ user });
+    } catch (error) {
+        console.error('Erreur lors de l\'ajout de l\'utilisateur admin:', error.message);  // Affichage de l'erreur dans la console
+        res.status(500).json({ message: error.message });
+    }
+};
+
 
 module.exports.getAllUsers= async (req,res) => {
     try {
+        console.log("get all users");
+        
         const userListe = await userModel.find()
 
         res.status(200).json({userListe});
