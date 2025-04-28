@@ -12,6 +12,19 @@ const createToken = (id) => {
     return jwt.sign({id},'net secret pfe', {expiresIn: maxTime })
 }
 
+
+module.exports.getAllUsers= async (req,res) => {
+    try {
+        console.log("get all users");
+        
+        const userListe = await userModel.find()
+
+        res.status(200).json({userListe});
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
+}
+
 module.exports.addUserClient = async (req, res) => {
     try {
         // Affichage du contenu du body de la requête
@@ -194,39 +207,11 @@ module.exports.updateUserById = async (req, res) => {
             res.status(500).json({message: error.message});
         }
         }
-        module.exports.getAllUsersSortByAge= async (req,res) => {
-            try {
-                const userListe = await userModel.find().sort({age : 1}).limit(2)
-                //const userListe = await userModel.find().sort({age : -1}).limit(2)
-        
-                res.status(200).json({userListe});
-            } catch (error) {
-                res.status(500).json({message: error.message});
-            }
-        }
+      
 
-        module.exports.getAllUsersAge= async (req,res) => {
-            try {
-                const {age} = req.params
-                const userListe = await userModel.find({ age : age})
-        
-                res.status(200).json({userListe});
-            } catch (error) {
-                res.status(500).json({message: error.message});
-            }
-        }
+      
 
-        module.exports.getAllUsersAgeBetMaxAgeMinAge= async (req,res) => {
-            try {
-                const MaxAge = req.query.MaxAge
-                const MinAge = req.query.MinAge
-                const userListe = await userModel.find({age : { $gt : MinAge , $lt : MaxAge}}).sort({age : 1})
-        
-                res.status(200).json({userListe});
-            } catch (error) {
-                res.status(500).json({message: error.message});
-            }
-        }
+     
         module.exports.getAllClient= async (req,res) => {
             try {
     
