@@ -1,7 +1,7 @@
 const userModel = require('../models/userSchema');
 const CommandeModel = require('../models/commandeSchema');
 const PanierModel = require('../models/panierSchema');
-const ProduitModel = require('../models/produitSchema');
+const ProduitModel = require('../models/productSchema');
 const ReclamationModel = require('../models/reclamationSchema');
 const jwt = require('jsonwebtoken');
 

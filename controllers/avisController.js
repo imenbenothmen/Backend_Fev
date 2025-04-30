@@ -1,5 +1,5 @@
 const avisModel = require('../models/avisSchema');
-const produitModel = require('../models/produitSchema');  
+const produitModel = require('../models/productSchema');  
 const userModel = require('../models/userSchema');
 // Laisser un avis pour un produit
 exports.laisserAvis = async (req, res) => {

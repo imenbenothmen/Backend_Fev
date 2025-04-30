@@ -1,5 +1,5 @@
 const favorisModel = require('../models/favorisSchema');
-const ProduitModel = require('../models/ProduitSchema');  
+const ProduitModel = require('../models/productSchema');  
 
 // Ajouter un produit aux favoris
 exports.ajouter_au_favoris = async (req, res) => {

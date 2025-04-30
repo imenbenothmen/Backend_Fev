@@ -1,6 +1,6 @@
 const reclamationModel = require('../models/reclamationSchema');
 const commandeModel = require('../models/commandeSchema');
-const produitModel = require('../models/produitSchema');
+const produitModel = require('../models/productSchema');
 const userModel = require('../models/userSchema');
 
 // Soumettre une réclamation

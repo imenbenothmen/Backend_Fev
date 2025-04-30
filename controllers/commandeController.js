@@ -1,6 +1,6 @@
 const Commande = require('../models/commandeSchema');
 const Panier = require('../models/panierSchema');
-const Produit = require('../models/ProduitSchema');
+const Produit = require('../models/productSchema');
 
 // Créer une commande à partir du panier d'un utilisateur
 exports.createCommande = async (req, res) => {
