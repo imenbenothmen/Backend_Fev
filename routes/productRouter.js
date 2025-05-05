@@ -11,7 +11,7 @@ router.post('/addProduct', upload.single('image'), productController.addProduct)
 router.delete('/deleteProduct/:id', productController.deleteProduct);
 
 // Route to get all products
-router.get('/getAllProduct', productController.getAllProducts);
+router.get('/getAllProducts', productController.getAllProducts);
 
 // Route to get product details by ID
 router.get('/getProductDetails/:id', productController.getProductDetails);

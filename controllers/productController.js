@@ -49,17 +49,25 @@ exports.getAllProducts = async (req, res) => {
 };
 
 // Get product details
+// Backend - ProductController.js
+const Product = require('../models/productSchema'); // Assure-toi que ton modèle est bien importé
+
 exports.getProductDetails = async (req, res) => {
-    try {
-        const product = await productModel.findById(req.params.id).populate('category');
-        if (!product) {
-            return res.status(404).json({ message: "Product not found" });
-        }
-        res.status(200).json(product);
-    } catch (error) {
-        res.status(500).json({ message: "Error while fetching product details", error });
+  try {
+    const product = await Product.findById(req.params.id)
+      .populate('reviews')  // Populer les avis
+      .exec();
+
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
     }
+
+    res.status(200).json(product);  // Renvoie les données du produit avec les avis
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
+
 
 // Get number of products by category
 exports.getProductCountByCategory = async (req, res) => {
