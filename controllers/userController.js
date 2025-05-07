@@ -1,7 +1,7 @@
 const userModel = require('../models/userSchema');
 const CommandeModel = require('../models/commandeSchema');
-const PanierModel = require('../models/panierSchema');
-const ProduitModel = require('../models/productSchema');
+const cartModel = require('../models/cartSchema');
+const ProductModel = require('../models/productSchema');
 const ReclamationModel = require('../models/reclamationSchema');
 const jwt = require('jsonwebtoken');
 
@@ -30,8 +30,8 @@ module.exports.addUserClient = async (req, res) => {
         // Affichage du contenu du body de la requête
         console.log(req.body); // Cela affichera les données envoyées dans le corps de la requête
 
-        const { username, email, password, phone, role, delivery_address , user_image } = req.body;
-        const roleClient = 'client';
+        const { username, email, password, phone,  delivery_address , user_image } = req.body;
+        //const roleClient = 'client';
         
         // Vérification des données (si nécessaire)
         if (!username || !email || !password) {

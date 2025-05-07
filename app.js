@@ -18,10 +18,10 @@ var productRouter = require('./routes/productRouter');
 var GeminiRouter = require("./routes/GeminiRouter");
 var categoryRouter = require('./routes/categoryRouter');
 var commandeRouter = require("./routes/commandeRouter");
-var panierRouter = require("./routes/panierRouter");
+var cartRouter = require("./routes/cartRouter");
 var reviewRouter = require('./routes/reviewRouter');
 var livraisonRouter= require("./routes/livraisonRouter");
-var favorisRouter= require("./routes/favorisRouter");
+var favoritesRouter= require("./routes/favoritesRouter");
 var reclamationRouter= require("./routes/reclamationRouter");
 
 
@@ -59,10 +59,10 @@ app.use('/products', productRouter);
 app.use("/Gemini", GeminiRouter);
 app.use('/categories', categoryRouter);
 app.use('/commande', commandeRouter);
-app.use('/panier', panierRouter);
+app.use('/cart', cartRouter);
 app.use('/reviews', reviewRouter);
 app.use('/livraison', livraisonRouter);
-app.use('/favoris', favorisRouter);
+app.use('/favorites', favoritesRouter);
 app.use('/reclamation', reclamationRouter);
 
 

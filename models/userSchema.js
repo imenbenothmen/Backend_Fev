@@ -31,6 +31,7 @@ const userSchema = new mongoose.Schema(
     role: {
       type: String,
       enum: ["admin", "client", "livreur"],
+      default: "client"
     },
     delivery_address: { 
       type: String, 
@@ -53,7 +54,7 @@ const userSchema = new mongoose.Schema(
     //Un utilisateur peut passer plusieurs commandes, mais chaque commande appartient à un seul utilisateur.
     commandes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Commande' }], // Relation un-à-plusieurs
     //Un utilisateur a un seul panier, et chaque panier appartient à un seul utilisateur.
-    panier: { type: mongoose.Schema.Types.ObjectId, ref: 'Panier' } ,// Relation un-à-un
+    cart: { type: mongoose.Schema.Types.ObjectId, ref: 'cart' } ,// Relation un-à-un
     //Un utilisateur peut avoir plusieurs produits favoris, et chaque produit peut être favori de plusieurs utilisateurs.
     favoris: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Produit' }], // Relation plusieurs-à-plusieurs
     //Un utilisateur peut soumettre plusieurs réclamations, et chaque réclamation appartient à un seul utilisateur.

@@ -4,6 +4,7 @@ const Product = require('../models/productSchema');
 // Ajouter un avis pour un produit
 exports.addReview = async (req, res) => {
   try {
+    //const { userId, productId, rating, comment } = req.body;
     const { productId, rating, comment } = req.body;
     const userId = req.user.id;  // L'ID de l'utilisateur qui a fait l'avis (assurez-vous d'être authentifié)
 
