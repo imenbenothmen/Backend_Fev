@@ -1,8 +1,8 @@
 const userModel = require('../models/userSchema');
-const CommandeModel = require('../models/commandeSchema');
+const CommandeModel = require('../models/orderSchema');
 const cartModel = require('../models/cartSchema');
 const ProductModel = require('../models/productSchema');
-const ReclamationModel = require('../models/reclamationSchema');
+const ReclamationModel = require('../models/complaintSchema');
 const jwt = require('jsonwebtoken');
 
 const maxTime = 24 *60 * 60 //24H
