@@ -1,24 +1,27 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+
 const userSchema = new mongoose.Schema(
   {
-    
-      username: {
+    username: {
       type: String,
-      required: true,
+      required: [true, "Le nom d'utilisateur est requis."],
       unique: true,
     },
     email: {
       type: String,
-      required: true,
+      required: [true, "L'adresse e-mail est requise."],
       unique: true,
       lowercase: true,
-      match: [/^\S+@\S+\.\S+$/, "Please enter a valid email address"],
+      match: [
+        /^\S+@\S+\.\S+$/,
+        "Veuillez entrer une adresse e-mail valide.",
+      ],
     },
     password: {
       type: String,
-      required: true,
-      minLength: 8,
+      required: [true, "Le mot de passe est requis."],
+      minLength: [8, "Le mot de passe doit contenir au moins 8 caractères."],
       match: [
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
         "Le mot de passe doit contenir au moins 8 caractères, une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial.",
@@ -30,85 +33,78 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["admin", "client", "livreur"],
-      default: "client"
+      enum: ["admin", "client"],
+      default: "client",
     },
-    delivery_address: { 
-      type: String, 
-      required: false, 
-      default: "" 
+    delivery_address: {
+      type: String,
+      required: false,
+      default: "client",
     },
 
-  
-
-    //numeroCarteFidelite: { type: String, unique: true, sparse: true },
-   
-
-    user_image: { type: String, require: false },
-    
-    
+    user_image: {
+      type: String,
+      required: false,
+    },
 
     etat: Boolean,
     ban: Boolean,
 
-    //Un utilisateur peut passer plusieurs commandes, mais chaque commande appartient à un seul utilisateur.
-    commandes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Commande' }], // Relation un-à-plusieurs
-    //Un utilisateur a un seul panier, et chaque panier appartient à un seul utilisateur.
-    cart: { type: mongoose.Schema.Types.ObjectId, ref: 'cart' } ,// Relation un-à-un
-    //Un utilisateur peut avoir plusieurs produits favoris, et chaque produit peut être favori de plusieurs utilisateurs.
-    favoris: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Produit' }], // Relation plusieurs-à-plusieurs
-    //Un utilisateur peut soumettre plusieurs réclamations, et chaque réclamation appartient à un seul utilisateur.
-   reclamations: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Reclamation' }] // Relation un-à-plusieurs
-
-
-
-
-
+    commandes: [
+      { type: mongoose.Schema.Types.ObjectId, ref: "Commande" },
+    ],
+    cart: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "cart",
+    },
+    favoris: [
+      { type: mongoose.Schema.Types.ObjectId, ref: "Produit" },
+    ],
+    complaint: [
+      { type: mongoose.Schema.Types.ObjectId, ref: "complaint" },
+    ],
   },
   { timestamps: true }
 );
 
+// Cryptage du mot de passe avant sauvegarde
 userSchema.pre("save", async function (next) {
   try {
     const salt = await bcrypt.genSalt();
-    const user = this;
-    user.password = await bcrypt.hash(user.password, salt);
-    //user.etat = false ;
-    user.count = user.count + 1;
+    this.password = await bcrypt.hash(this.password, salt);
     next();
   } catch (error) {
     next(error);
   }
 });
 
-userSchema.post("save", async function (req, res, next) {
-  console.log("new user was created & saved successfully");
+// Log après sauvegarde
+userSchema.post("save", function (doc, next) {
+  console.log("Nouvel utilisateur créé et enregistré avec succès.");
   next();
 });
 
+// Méthode de connexion personnalisée
 userSchema.statics.login = async function (email, password) {
-  //console.log(email, password);
   const user = await this.findOne({ email });
-  //console.log(user)
-  if (user) {
-    const auth = await bcrypt.compare(password,user.password);
-    //console.log(auth)
-    if (auth) {
-      // if (user.etat === true) {
-      //   if (user.ban === false) {
-          return user;
-      //   } else {
-      //     throw new Error("ban");
-      //   }
-      // } else {
-      //   throw new Error("compte desactive ");
-      // }
-    } else {
-      throw new Error("password invalid"); 
-    }
-  } else {
-    throw new Error("email not found");
+  if (!user) {
+    throw new Error("Adresse e-mail introuvable.");
   }
+
+  const auth = await bcrypt.compare(password, user.password);
+  if (!auth) {
+    throw new Error("Mot de passe incorrect.");
+  }
+
+  // Décommenter si vous voulez activer/désactiver ou bannir des comptes
+  // if (!user.etat) {
+  //   throw new Error("Le compte est désactivé.");
+  // }
+  // if (user.ban) {
+  //   throw new Error("Le compte a été banni.");
+  // }
+
+  return user;
 };
 
 const user = mongoose.model("user", userSchema);

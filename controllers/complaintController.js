@@ -3,6 +3,18 @@ const orderModel = require('../models/orderSchema');
 const productModel = require('../models/productSchema');
 const userModel = require('../models/userSchema');
 
+
+// 🔎 Get all complaints
+exports.getAllComplaints = async (req, res) => {
+  try {
+    const complaints = await complaintModel.find()
+      .populate('client', 'name') // si tu veux afficher le nom du client
+      .populate('product', 'name'); // si tu veux afficher le nom du produit
+    res.status(200).json(complaints);
+  } catch (error) {
+    res.status(500).json({ message: "Erreur lors de la récupération des réclamations", error });
+  }
+};
 // Submit a complaint
 exports.submitComplaint = async (req, res) => {
   try {

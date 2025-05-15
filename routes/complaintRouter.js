@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const complaintController = require('../controllers/complaintController');
+// GET – Récupérer toutes les réclamations
+router.get('/', complaintController.getAllComplaints);
 
 // Submit a complaint
 router.post('/complaints', complaintController.submitComplaint);
