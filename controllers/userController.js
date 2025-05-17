@@ -201,12 +201,20 @@ module.exports.login = async (req, res) => {
     const user = await userModel.login(email, password);
     const token = createToken(user._id);
 
-    res.cookie("jwt_token_9antra", token, { httpOnly: false, maxAge: maxTime * 1000 });
+    // Ici tu mets le res.cookie avec les options
+    res.cookie("jwt_token_9antra", token, { 
+      httpOnly: false,       // pour debug, sinon mettre true
+      maxAge: maxTime * 1000,
+      sameSite: 'lax',       // obligatoire pour cookie cross-origin
+      secure: false          // false en local (pas https)
+    });
+
     res.status(200).json({ user });
   } catch (error) {
     res.status(500).json({ message: "Échec de la connexion. Vérifiez vos identifiants." });
   }
 };
+
 
 // ✅ LOGOUT
 module.exports.logout = async (req, res) => {
@@ -217,3 +225,25 @@ module.exports.logout = async (req, res) => {
     res.status(500).json({ message: "Erreur lors de la déconnexion." });
   }
 };
+module.exports.getMyProfile = async (req, res) => {
+  try {
+    const user = await userModel.findById(req.session.user._id);
+    res.status(200).json({ user });
+  } catch (error) {
+    res.status(500).json({ message: "Erreur lors de la récupération du profil." });
+  }
+};
+
+
+module.exports.updateMyProfile = async (req, res) => {
+  try {
+    const updates = req.body;
+    await userModel.findByIdAndUpdate(req.session.user._id, { $set: updates });
+    const updated = await userModel.findById(req.session.user._id);
+    res.status(200).json({ updated });
+  } catch (error) {
+    res.status(500).json({ message: "Erreur lors de la mise à jour du profil." });
+  }
+};
+
+

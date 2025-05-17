@@ -37,20 +37,24 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(logMiddleware)  //log
 
 
-app.use(session({   //cobfig session
+app.use(cors({
+  origin: "http://localhost:3000",
+  methods: "GET,POST,PUT,DELETE",
+  credentials: true,
+}));
+
+app.use(session({
   secret: "net secret pfe",
   resave: false,
   saveUninitialized: true,
   cookie: {
-    secure: {secure: false},
-    maxAge: 24*60*60,
-  },
-}))
+    secure: false,
+    maxAge: 24 * 60 * 60 * 1000,
+    sameSite: 'lax',   // à ajouter aussi ici si tu utilises la session
+  }
+}));
 
-app.use(cors({
-  origin:"http://localhost:3000",
-  methods:"GET,POST,PUT,Delete",
-}))
+
 
 app.use("", indexRouter);
 app.use('/users', usersRouter);

@@ -12,6 +12,8 @@ router.get('/searchUserByUsername',userController.searchUserByUsername);
 
 router.get('/getAllClient',userController.getAllClient); 
 router.get('/getAllAdmin',userController.getAllAdmin); 
+// Nouveau endpoint sécurisé pour consulter son propre profil
+router.get('/profile', requireAuthUser, userController.getMyProfile);
 
 router.post('/addUserLivreur',userController.addUserLivreur);
 router.post('/addUserClient',userController.addUserClient);
@@ -23,7 +25,11 @@ router.post('/logout',userController.logout);
 
 router.put('/updateUserById/:id',userController.updateUserById); 
 
+// Nouveau endpoint sécurisé pour mettre à jour son profil
+router.put('/profile/update', requireAuthUser, userController.updateMyProfile);
+
 router.delete('/deleteUserById/:id',userController.deleteUserById);
+
 
 
 
