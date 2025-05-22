@@ -2,17 +2,53 @@ const Order = require('../models/orderSchema');
 const Cart = require('../models/cartSchema');
 const Product = require('../models/productSchema');
 
-// GET – Récupérer toutes les commandes (pour admin)
+
 exports.getAllOrders = async (req, res) => {
+  console.log("📦 [getAllOrders] Route appelée"); // ✅ Vérifie si on entre ici
+
   try {
-    const orders = await orderModel.find()
-      .populate('client', 'name email') // pour afficher les infos client
-      .populate('products.product', 'name price'); // pour les infos produits
+    const orders = await Order.find()
+      .populate('client', 'email')
+      .populate('products.product', 'price');
+
+    console.log("✅ Commandes récupérées :", orders.length); // Affiche le nombre de commandes
     res.status(200).json(orders);
   } catch (error) {
-    res.status(500).json({ message: "Erreur lors de la récupération des commandes", error });
+    console.error("❌ Erreur dans getAllOrders :", error); // Affiche l'erreur dans le terminal
+    res.status(500).json({
+      message: "Erreur lors de la récupération des commandes",
+      error: error.message,
+    });
   }
 };
+
+
+
+
+exports.addOrder = async (req, res) => {
+  try {
+    const { client, products, total } = req.body;
+
+    if (!client || !products || !Array.isArray(products) || products.length === 0 || !total) {
+      return res.status(400).json({ message: "Champs manquants ou invalides" });
+    }
+
+    const newOrder = new Order({
+      client,
+      products,
+      total,
+      status: 'pending'
+    });
+
+    await newOrder.save();
+    res.status(201).json({ message: 'Commande ajoutée avec succès', order: newOrder });
+
+  } catch (error) {
+    res.status(500).json({ message: "Erreur lors de l'ajout de la commande", error: error.message });
+  }
+};
+
+
 
 
 // Create order from user's cart

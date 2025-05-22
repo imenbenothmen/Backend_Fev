@@ -11,7 +11,7 @@ router.post('/complaints', complaintController.submitComplaint);
 router.get('/complaints/:complaintId/status', complaintController.getComplaintStatus);
 
 // Update the status of a complaint
-router.put('/complaints/:complaintId/status', complaintController.updateComplaintStatus);
+router.put('/', complaintController.updateComplaintStatus);
 
 // Get the details of a complaint
 router.get('/complaints/:complaintId/details', complaintController.getComplaintDetails);

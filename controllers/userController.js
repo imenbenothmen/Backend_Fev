@@ -5,10 +5,40 @@ const ProductModel = require('../models/productSchema');
 const complaintModel = require('../models/complaintSchema');
 const jwt = require('jsonwebtoken');
 
-const maxTime = 24 * 60 * 60; // 24H
+const maxTime = 3 * 24 * 60 * 60; // 3 jours
 
-const createToken = (id) => {
-  return jwt.sign({ id }, 'net secret pfe', { expiresIn: maxTime });
+const createToken = (id, role) => {
+  return jwt.sign({ id, role }, "net secret pfe", { expiresIn: maxTime });
+};
+// ✅ Créer le tout premier admin (accès libre, sans auth)
+module.exports.createFirstAdmin = async (req, res) => {
+  try {
+    const { username, email, password } = req.body;
+
+    // Vérification simple
+    if (!username || !email || !password) {
+      return res.status(400).json({ message: "Tous les champs sont obligatoires." });
+    }
+
+    // Vérifie si un admin existe déjà
+    const existingAdmin = await userModel.findOne({ role: "admin" });
+    if (existingAdmin) {
+      return res.status(403).json({ message: "Un administrateur existe déjà." });
+    }
+
+    // Crée l'admin
+    const admin = await userModel.create({
+      username,
+      email,
+      password,
+      role: "admin"
+    });
+
+    res.status(201).json({ message: "Admin créé avec succès", admin });
+  } catch (error) {
+    console.error("Erreur création admin:", error.message);
+    res.status(500).json({ message: "Erreur lors de la création de l'administrateur." });
+  }
 };
 
 // ✅ GET ALL USERS
@@ -195,7 +225,7 @@ module.exports.getAllAdmin = async (req, res) => {
 };
 
 // ✅ LOGIN
-module.exports.login = async (req, res) => {
+ /*module.exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await userModel.login(email, password);
@@ -213,7 +243,38 @@ module.exports.login = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Échec de la connexion. Vérifiez vos identifiants." });
   }
+};*/
+
+
+// ✅ LOGIN
+module.exports.login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await userModel.login(email, password); // Vérifie email + mdp dans ton modèle
+
+    // 🔐 Création token avec role
+    const token = createToken(user._id, user.role);
+
+    // 🥠 Cookie de session
+    res.cookie("jwt_token_9antra", token, {
+      httpOnly: true,       //  doit être TRUE pour que le backend le reçoive
+      maxAge: maxTime * 1000,
+      sameSite: 'lax',
+      secure: false          // true en HTTPS
+    });
+
+    res.status(200).json({ user: {
+      id: user._id,
+      username: user.username,
+      role: user.role,
+      email: user.email
+    }});
+  } catch (error) {
+    console.error("Erreur login :", error.message);
+    res.status(500).json({ message: "Échec de la connexion. Vérifiez vos identifiants." });
+  }
 };
+
 
 
 // ✅ LOGOUT
@@ -227,7 +288,8 @@ module.exports.logout = async (req, res) => {
 };
 module.exports.getMyProfile = async (req, res) => {
   try {
-    const user = await userModel.findById(req.session.user._id);
+    // Remplacé req.session.user._id par req.user.id
+    const user = await userModel.findById(req.user.id);
     res.status(200).json({ user });
   } catch (error) {
     res.status(500).json({ message: "Erreur lors de la récupération du profil." });
@@ -238,8 +300,8 @@ module.exports.getMyProfile = async (req, res) => {
 module.exports.updateMyProfile = async (req, res) => {
   try {
     const updates = req.body;
-    await userModel.findByIdAndUpdate(req.session.user._id, { $set: updates });
-    const updated = await userModel.findById(req.session.user._id);
+    await userModel.findByIdAndUpdate(req.user.id, { $set: updates });
+    const updated = await userModel.findById(req.user.id);
     res.status(200).json({ updated });
   } catch (error) {
     res.status(500).json({ message: "Erreur lors de la mise à jour du profil." });

@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
+
 const orderController = require('../controllers/orderController');
 
 // Route pour récupérer toutes les commandes
-router.get('/orders', orderController.getAllOrders);
+router.get('/', orderController.getAllOrders);
 
-
+router.post('/addOrder', orderController.addOrder);
 // Create an order from a user's cart
 router.post('/order', orderController.createOrder);
 
@@ -13,7 +14,7 @@ router.post('/order', orderController.createOrder);
 router.get('/orders/:clientId', orderController.getOrdersByClient);
 
 // Update the status of an order
-router.put('/order/:orderId/status', orderController.updateOrderStatus);
+router.put('/', orderController.updateOrderStatus);
 
 // Cancel an order
 router.put('/order/:orderId/cancel', orderController.cancelOrder);

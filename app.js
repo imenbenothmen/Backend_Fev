@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const session = require("express-session"); //session
+//const session = require("express-session"); //session
 const {connectToMongoDb} = require('./config/db');
 const cors = require("cors");
 require("dotenv").config();
@@ -43,7 +43,7 @@ app.use(cors({
   credentials: true,
 }));
 
-app.use(session({
+/*app.use(session({
   secret: "net secret pfe",
   resave: false,
   saveUninitialized: true,
@@ -52,7 +52,7 @@ app.use(session({
     maxAge: 24 * 60 * 60 * 1000,
     sameSite: 'lax',   // à ajouter aussi ici si tu utilises la session
   }
-}));
+}));*/
 
 
 
@@ -62,12 +62,12 @@ app.use('/os', osRouter);
 app.use('/products', productRouter);
 app.use("/Gemini", GeminiRouter);
 app.use('/categories', categoryRouter);
-app.use('/order', orderRouter);
+app.use('/orders', orderRouter);
 app.use('/cart', cartRouter);
 app.use('/reviews', reviewRouter);
 
 app.use('/favorites', favoritesRouter);
-app.use('/complaint', complaintRouter);
+app.use('/complaints', complaintRouter);
 
 
 
