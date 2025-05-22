@@ -264,7 +264,7 @@ module.exports.login = async (req, res) => {
     });
 
     res.status(200).json({ user: {
-      id: user._id,
+      _id: user._id,
       username: user.username,
       role: user.role,
       email: user.email
