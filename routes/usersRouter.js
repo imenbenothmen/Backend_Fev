@@ -30,8 +30,8 @@ router.post('/logout', userController.logout);
 /* Routes sécurisées, accès utilisateur connecté (client ou admin) */
 router.get('/profile', requireAuthUser, userController.getMyProfile);
 router.put('/profile/update', requireAuthUser, userController.updateMyProfile);
-router.put('/updateUserById/:id', requireAuthUser, userController.updateUserById);
-router.delete('/deleteUserById/:id', requireAuthUser, userController.deleteUserById);
+router.put('/updateUserById/:id',  userController.updateUserById);
+router.delete('/deleteUserById/:id', userController.deleteUserById);
 
 /* Routes réservées aux admins */
 router.post('/addUserAdmin', requireAuthUser, requireAdmin, userController.addUserAdmin);

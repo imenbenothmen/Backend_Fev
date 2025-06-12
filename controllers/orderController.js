@@ -37,7 +37,7 @@ exports.addOrder = async (req, res) => {
       client,
       products,
       total,
-      status: 'pending'
+      status: 'En attente'
     });
 
     await newOrder.save();
@@ -108,7 +108,7 @@ exports.updateOrderStatus = async (req, res) => {
     const { status } = req.body;
     const { orderId } = req.params;
 
-    const validStatuses = ['pending', 'validated', 'shipped', 'delivered', 'cancelled'];
+    const validStatuses = ['En attente', 'traitée', 'shipped', 'delivered', 'cancelled'];
     if (!validStatuses.includes(status)) {
       return res.status(400).json({ message: 'Invalid status' });
     }

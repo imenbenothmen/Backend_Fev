@@ -13,8 +13,8 @@ router.post('/order', orderController.createOrder);
 // Get all orders for a specific client
 router.get('/orders/:clientId', orderController.getOrdersByClient);
 
-// Update the status of an order
-router.put('/', orderController.updateOrderStatus);
+// ✅ FIXED: Update the status of an order - now matches frontend call
+router.put('/:orderId/status', orderController.updateOrderStatus);
 
 // Cancel an order
 router.put('/order/:orderId/cancel', orderController.cancelOrder);
